@@ -129,6 +129,10 @@ class Bonus():
 			self.BONUS_HELMET,
 			self.BONUS_SHOVEL,
 			self.BONUS_STAR,
+			self.BONUS_STAR,
+			self.BONUS_STAR,
+			self.BONUS_TANK,
+			self.BONUS_TANK,
 			self.BONUS_TANK,
 			self.BONUS_TIMER
 		])
@@ -545,55 +549,40 @@ class Tank():
 	(SIDE_PLAYER, SIDE_ENEMY) = range(2)
 
 	def __init__(self, level, side, position = None, direction = None, filename = None):
-
 		global sprites
-
 		# health. 0 health means dead
-		self.health = 100
-
+		self.health = 200
 		# tank can't move but can rotate and shoot
 		self.paralised = False
-
 		# tank can't do anything
 		self.paused = False
-
 		# tank is protected from bullets
 		self.shielded = False
-
 		# px per move
 		self.speed = 2
-
 		# how many bullets can tank fire simultaneously
 		self.max_active_bullets = 1
-
 		# friend or foe
 		self.side = side
-
 		# flashing state. 0-off, 1-on
 		self.flash = 0
-
 		# 0 - no superpowers
 		# 1 - faster bullets
 		# 2 - can fire 2 bullets
 		# 3 - can destroy steel
 		self.superpowers = 0
-
 		# each tank can pick up 1 bonus
 		self.bonus = None
-
 		# navigation keys: fire, up, right, down, left
-		self.controls = [pygame.K_SPACE, pygame.K_UP, pygame.K_RIGHT, pygame.K_DOWN, pygame.K_LEFT]
-
+		self.controls = [pygame.K_BACKQUOTE, 119, 100, 115, 97]
 		# currently pressed buttons (navigation only)
 		self.pressed = [False] * 4
-
 		self.shield_images = [
 			sprites.subsurface(0, 48*2, 16*2, 16*2),
 			sprites.subsurface(16*2, 48*2, 16*2, 16*2)
-		]
-		self.shield_image = self.shield_images[0]
+		] 
+		self.shield_image = self.shield_images[0] 
 		self.shield_index = 0
-
 		self.spawn_images = [
 			sprites.subsurface(32*2, 48*2, 16*2, 16*2),
 			sprites.subsurface(48*2, 48*2, 16*2, 16*2)
@@ -1139,7 +1128,7 @@ class Player(Tank):
 		self.start_position = position
 		self.start_direction = direction
 
-		self.lives = 3
+		self.lives = 9
 
 		# total score
 		self.score = 0
@@ -1465,7 +1454,7 @@ class Game():
 				if event.type == pygame.QUIT:
 					quit()
 				elif event.type == pygame.KEYDOWN:
-					if event.key == pygame.K_q:
+					if event.key == pygame.K_6:
 						quit()
 					elif event.key == pygame.K_UP:
 						if self.nr_of_players == 2:
@@ -1505,7 +1494,7 @@ class Game():
 				player = Player(
 					self.level, 0, [x, y], self.DIR_UP, (16*2, 0, 13*2, 13*2)
 				)
-				player.controls = [102, 119, 100, 115, 97]
+				player.controls = [pygame.K_SPACE, pygame.K_UP, pygame.K_RIGHT, pygame.K_DOWN, pygame.K_LEFT]
 				players.append(player)
 
 		for player in players:
@@ -1980,7 +1969,7 @@ class Game():
 					quit()
 				elif event.type == pygame.KEYDOWN and not self.game_over and self.active:
 
-					if event.key == pygame.K_q:
+					if event.key == pygame.K_6:
 						quit()
 					# toggle sounds
 					elif event.key == pygame.K_m:
